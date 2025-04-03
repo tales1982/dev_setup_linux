@@ -1,0 +1,48 @@
+#!/bin/bash
+
+echo "🔧 Atualizando o sistema..."
+sudo apt update && sudo apt upgrade -y
+
+echo "📦 Instalando pacotes básicos..."
+sudo apt install -y \
+  git curl wget build-essential \
+  vim zsh tmux python3 python3-pip \
+  software-properties-common \
+  apt-transport-https ca-certificates gnupg lsb-release \
+  default-jdk
+
+echo "🐍 Verificando Python..."
+python3 --version && pip3 --version
+
+echo "🌐 Instalando Node.js via NVM..."
+export NVM_DIR="$HOME/.nvm"
+if [ ! -d "$NVM_DIR" ]; then
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+  source ~/.bashrc || source ~/.zshrc
+fi
+
+# Aguarda shell recarregar
+source "$NVM_DIR/nvm.sh"
+nvm install --lts
+nvm use --lts
+nvm alias default 'lts/*'
+
+echo "🐳 Instalando Docker..."
+sudo apt install -y docker.io
+sudo systemctl enable docker
+sudo systemctl start docker
+sudo usermod -aG docker $USER
+
+echo "🧠 Instalando VS Code (via Snap)..."
+sudo snap install code --classic
+
+echo "📦 Instalando Flatpak..."
+sudo apt install -y flatpak
+
+echo "✅ Tudo pronto! Você pode precisar reiniciar ou reentrar no terminal para aplicar todas as mudanças."
+
+echo "🚀 Lembre-se de testar:"
+echo "  - git --version"
+echo "  - node -v"
+echo "  - docker --version"
+echo "  - code"
