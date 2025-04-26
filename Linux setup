@@ -46,3 +46,27 @@ echo "  - git --version"
 echo "  - node -v"
 echo "  - docker --version"
 echo "  - code"
+
+
+5. Executar em background
+Usando PM2 (recomendado)
+Instale o PM2 (uma só vez):
+
+```bash
+npm install -g pm2
+```
+Inicie o seu app:
+```bash
+pm2 start dist/index.js --name reminders-backend
+```
+
+Salve a configuração para reiniciar no boot:
+```bash
+pm2 save
+```
+
+pm2 startup systemd      # vai gerar e instruir um comando para rodar
+Verifique logs:
+```bash
+pm2 logs reminders-backend
+```
